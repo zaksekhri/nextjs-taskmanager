@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model authentication {
+  id   Int     @id
+  code String? @db.VarChar
+}
+
+model task {
+  task_id      Int       @id
+  task_name    String?   @db.VarChar
+  completed    Boolean
+  day          DateTime? @db.Timestamp(6)
+  ordering     Int?
+  task_list_id Int
+  day_ordering Int?
+  task_list    task_list @relation(fields: [task_list_id], references: [list_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model task_list {
+  list_id   Int     @id
+  list_name String? @db.VarChar
+  task      task[]
+}
