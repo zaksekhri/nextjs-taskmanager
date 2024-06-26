@@ -18,7 +18,7 @@ export class task{
 
     public static async getTask(id: number) {
         try {
-            let results: object = await prisma.task.findUnique({ where: { task_id: id }, include : {task_list: {select: {list_name:true}}}})
+            let results = await prisma.task.findUnique({ where: { task_id: id }, include : {task_list: {select: {list_name:true}}}})
             return results;
         } catch (error) {
             return [false, error]
@@ -47,7 +47,7 @@ export class task{
 
     public static async deleteTask(id: number) {
         try {
-            let results = await prisma.task.findUnique({ where: { task_id: id }})
+            let results = await prisma.task.delete({ where: { task_id: id }})
             console.log(results)
             return results;
         } catch (error) {

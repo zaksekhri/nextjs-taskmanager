@@ -78,30 +78,15 @@ export async function PATCH(request: Request,{params}: {params: { id: string };}
  * @param {Request} request the request, unused, required to make it work
  * @param {string} id this comes from the URL of the request
  * @return {Response} the response object
- /
+ */
 export async function DELETE(request: Request,{params}: {params: { id: string };}) {
     try {
-
-        if(request.headers.get("Authorization")){
-
-            const session = lucia.validateSession(request.headers.get("Authorization") as string)
-
-            if ((await session).session?.userId == params.id){
-
-                if (await accountHandler.deleteAccount(params.id)){
-
-                    return new Response("{\"message\": \"Account deleted successfully\"}", { status: 200 });
-                } 
-                else {
-                    return new Response("{\"message\": \"Account doesn't exist\"}", { status: 400 });
-                }
-            }
-            else{
-                return new Response("{\"message\": \"Please Log in\"}", { status: 403 });
-            }
-        }
-        else{
-            return new Response("{\"message\": \"Please Log in\"}", { status: 403 });
+        let results = task.deleteTask(parseInt(params.id));
+        if (!results[0]) {
+            return new Response("{\"message\": \"Task deleted successfully\"}", { status: 200 });
+        } 
+        else {         
+            return new Response(`{"message": "Task doesn't exist" \n "error": "${results}" }`, { status: 400 });
         }
 
     } catch (error) {
@@ -109,4 +94,3 @@ export async function DELETE(request: Request,{params}: {params: { id: string };
         return new Response("{\"message\": \"Internal Server Error\"}", { status: 500 });
     }
 }
-*/
