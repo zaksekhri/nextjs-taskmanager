@@ -16,7 +16,7 @@ this is the first webapp in that series.
     - [ ] create
     - [x] read
     - [ ] update
-    - [ ] delete
+    - [x] delete
   - [ ] tasklist
     - [ ] create
     - [ ] read
@@ -28,6 +28,7 @@ this is the first webapp in that series.
 - [ ] wrap up
   - [ ] develop design docs for project
   - [ ] test app based on use cases
+  - [ ] create docker file
 
 # The app
 
