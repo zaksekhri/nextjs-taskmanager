@@ -15,7 +15,7 @@ this is the first webapp in that series.
   - [ ] task
     - [ ] create
     - [x] read
-    - [ ] update
+    - [x] update
     - [x] delete
   - [ ] tasklist
     - [ ] create

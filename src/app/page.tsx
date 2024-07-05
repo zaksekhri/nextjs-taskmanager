@@ -2,6 +2,7 @@
 
 import TaskTable from "@/components/my-ui/taskTable";
 import TaskDataTable from "@/components/my-ui/taskDataTable";
+import Link from "next/link";
 
 export  default function Home() {
   
@@ -10,6 +11,8 @@ export  default function Home() {
     <div><br/>
       <h1>task manager app</h1>
       <br/><br/>
+
+      <Link href="/api-docs">API Docs</Link>
 
 
       <div>

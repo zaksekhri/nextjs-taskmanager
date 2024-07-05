@@ -19,39 +19,61 @@ export class task{
     public static async getTask(id: number) {
         try {
             let results = await prisma.task.findUnique({ where: { task_id: id }, include : {task_list: {select: {list_name:true}}}})
+
+            if (!results) { return false }
             return results;
         } catch (error) {
-            return [false, error]
+            return false
         }
     }
 
-    public static async createTask(id: number, list_id: number, name: string, completed:boolean, day: Date | null, ordering: number, day_ordering:number) {
+    public static async createTask(data: any) {
+        // id: number, list_id: number, name: string, completed:boolean, day: Date | null, ordering: number, day_ordering:number
         try {
+            console.log(data)
+            console.log("data")
             let result = await prisma.task.create({
-                data : {
-                    task_id:id,
-                    task_list_id:list_id,
-                    completed:completed,
-                    ordering:ordering,
-                    day:day,
-                    day_ordering:day_ordering
-                }
+                data : data
             })
+
+            console.log(result)
+            if (result){
+                return true
+            } else { return false }
         } catch (error) {
-            
+            console.log(error)
+            return false;
         }
     }
 
 
-    public static async updateTask(id: number, data:JSON) {}
+    public static async updateTask(id: number, data: any) {
+        try {
+			if (
+				(await prisma.$executeRaw`SELECT task_id FROM "task" WHERE task_id = ${id};`) ==
+				0
+			) {
+				return false;
+			}
+
+            let result = await prisma.task.update({where : { task_id : id}, data})
+
+            if (result) {
+                return true
+            } else { 
+                console.log("hi1111");return false }
+        } catch (error) {
+            return false
+        }
+    }
 
     public static async deleteTask(id: number) {
         try {
             let results = await prisma.task.delete({ where: { task_id: id }})
             console.log(results)
-            return results;
+            return true;
         } catch (error) {
-            return [false, error]
+            return false
         }
     }
 }
